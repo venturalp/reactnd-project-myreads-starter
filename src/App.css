@@ -14,6 +14,11 @@ body, .app {
   padding: 10px 0;
   background: #2e7c31;
   text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
 }
 .list-books-title h1 {
   font-weight: 400;
@@ -171,4 +176,12 @@ body, .app {
   padding: 20px 10px 0;
   text-align: center;
   font-size: 0.8em;
+}
+
+.icons{
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  right: 35px;
+  transform: translateY(-50%);
 }

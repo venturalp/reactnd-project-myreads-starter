@@ -2,9 +2,14 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import Shelf from './Shelf'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faTrashAlt);
 
 class ShelfScreen extends Component{
-
+    
     state = {
         currentReading: [],
         wantToRead: [],
@@ -25,10 +30,19 @@ class ShelfScreen extends Component{
         })
     }
     
-    updateBook = (book, shelf) => {
+    updateBook = (book, shelf) => {        
         BooksAPI.update(book, shelf).then(()=>{
             this.getAllBooks();
         });
+    }
+
+    onDragOverTrash = (e) => {
+        e.preventDefault();
+    }
+
+    onTrashBook = (e) => {
+        let book = JSON.parse(e.dataTransfer.getData("DraggedBook"));        
+        this.updateBook(book, 'None');
     }
 
     render(){
@@ -36,12 +50,13 @@ class ShelfScreen extends Component{
             <div className="list-books">
                 <div className="list-books-title">
                 <h1>MyReads</h1>
+                <FontAwesomeIcon icon="trash-alt" className="fa-2x icons" onDrop={(e)=>this.onTrashBook(e)}  onDragOver={(e)=>this.onDragOverTrash(e)} />
                 </div>
                 <div className="list-books-content">
                     <div>
-                        <Shelf title="Currently Reading" books={this.state.currentReading} onUpdateBook={this.updateBook}/>
-                        <Shelf title="Want to Read" books={this.state.wantToRead} onUpdateBook={this.updateBook}/>
-                        <Shelf title="Read" books={this.state.read} onUpdateBook={this.updateBook}/>
+                        <Shelf type="currentlyReading" title="Currently Reading" books={this.state.currentReading} onUpdateBook={this.updateBook}/>
+                        <Shelf type="wantToRead" title="Want to Read" books={this.state.wantToRead} onUpdateBook={this.updateBook}/>
+                        <Shelf type="read" title="Read" books={this.state.read} onUpdateBook={this.updateBook}/>
                     </div>
                 </div>
                 <div className="open-search">              

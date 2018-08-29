@@ -8,6 +8,10 @@ class Book extends Component{
         changedShelf: PropTypes.func.isRequired
     }
 
+    onStartDrag = (e, book) => {           
+        e.dataTransfer.setData("DraggedBook", JSON.stringify(book));
+    }
+
     render(){
 
         const {title, imageLinks, shelf, authors } = this.props.info;
@@ -15,7 +19,7 @@ class Book extends Component{
         const strAuthors = authors && authors.join(", ");
         
         return(
-            <div className="book">
+            <div className="book" onDragStart={(e)=> this.onStartDrag(e, this.props.info)} draggable="true">
                 <div className="book-top">
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url("' + (imageLinks ? imageLinks.smallThumbnail : '') + '")' }}></div>
                     <div className="book-shelf-changer">
