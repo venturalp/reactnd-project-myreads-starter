@@ -8,8 +8,9 @@ class Shelf extends Component{
         books: PropTypes.array
     } 
     
-    onDropBook = (e) => {        
-        let book = JSON.parse(e.dataTransfer.getData("DraggedBook"));        
+    onDropBook = (e) => {
+        //Retrieve the book's data from the Drag'n'drop method called earlier
+        let book = JSON.parse(e.dataTransfer.getData("DraggedBook"));
         this.props.onUpdateBook(book, this.props.type);
     }
 

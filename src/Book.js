@@ -8,7 +8,8 @@ class Book extends Component{
         changedShelf: PropTypes.func.isRequired
     }
 
-    onStartDrag = (e, book) => {           
+    onStartDrag = (e, book) => {
+        //Setting the book into the dataTransfer of Drag'n'Drop
         e.dataTransfer.setData("DraggedBook", JSON.stringify(book));
     }
 

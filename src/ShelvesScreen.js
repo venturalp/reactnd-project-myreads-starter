@@ -21,18 +21,26 @@ class ShelfScreen extends Component{
     }
 
     getAllBooks = () => {
+        this.props.onSetLoading(true);
         BooksAPI.getAll().then((books)=>{            
             this.setState({
                 currentReading: books.filter(book=>book.shelf==="currentlyReading"),
                 wantToRead: books.filter(book=> book.shelf === "wantToRead"),
                 read: books.filter(book=> book.shelf === "read")
-            })            
+            }, () => {
+                this.props.onSetLoading(false);
+            })
+        }).catch(()=>{
+            this.props.onSetLoading(false);
         })
     }
     
-    updateBook = (book, shelf) => {        
+    updateBook = (book, shelf) => { 
+        this.props.onSetLoading(true);
         BooksAPI.update(book, shelf).then(()=>{
             this.getAllBooks();
+        }).catch(()=>{
+            this.props.onSetLoading(false);
         });
     }
 
@@ -41,7 +49,9 @@ class ShelfScreen extends Component{
     }
 
     onTrashBook = (e) => {
-        let book = JSON.parse(e.dataTransfer.getData("DraggedBook"));        
+        //Retrieve the book's data from the Drag'n'drop method called earlier
+        let book = JSON.parse(e.dataTransfer.getData("DraggedBook"));
+        //remove the book from the shelf
         this.updateBook(book, 'None');
     }
 
