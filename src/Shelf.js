@@ -11,6 +11,8 @@ class Shelf extends Component{
     onDropBook = (e) => {
         //Retrieve the book's data from the Drag'n'drop method called earlier
         let book = JSON.parse(e.dataTransfer.getData("DraggedBook"));
+        
+        if (this.props.type === book.shelf) return;
         this.props.onUpdateBook(book, this.props.type);
     }
 

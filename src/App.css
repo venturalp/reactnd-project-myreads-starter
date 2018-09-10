@@ -27,7 +27,7 @@ body, .app {
 }
 
 .list-books-content {
-  padding: 0 0 80px;
+  padding: 80px 0 80px;
   flex: 1;
 }
 
