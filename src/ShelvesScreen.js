@@ -5,15 +5,20 @@ import Shelf from './Shelf'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import PropTypes from 'prop-types'
 
 library.add(faTrashAlt);
 
 class ShelfScreen extends Component{
-    
+
     state = {
         currentReading: [],
         wantToRead: [],
         read: []
+    }
+
+    static propTypes = {
+        onSetLoading: PropTypes.func.isRequired
     }
 
     componentDidMount = () => {
@@ -22,7 +27,7 @@ class ShelfScreen extends Component{
 
     getAllBooks = () => {
         this.props.onSetLoading(true);
-        BooksAPI.getAll().then((books)=>{            
+        BooksAPI.getAll().then((books)=>{
             this.setState({
                 currentReading: books.filter(book=>book.shelf==="currentlyReading"),
                 wantToRead: books.filter(book=> book.shelf === "wantToRead"),
@@ -34,8 +39,8 @@ class ShelfScreen extends Component{
             this.props.onSetLoading(false);
         })
     }
-    
-    updateBook = (book, shelf) => { 
+
+    updateBook = (book, shelf) => {
         this.props.onSetLoading(true);
         BooksAPI.update(book, shelf).then(()=>{
             this.getAllBooks();
@@ -69,7 +74,7 @@ class ShelfScreen extends Component{
                         <Shelf type="read" title="Read" books={this.state.read} onUpdateBook={this.updateBook}/>
                     </div>
                 </div>
-                <div className="open-search">              
+                <div className="open-search">
                 <Link to="/search">Add a book</Link>
                 </div>
             </div>

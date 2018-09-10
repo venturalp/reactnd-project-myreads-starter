@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import Book from './Book'
-import {DebounceInput} from 'react-debounce-input';
+import {DebounceInput} from 'react-debounce-input'
+import PropTypes from 'prop-types'
 
 class SearchScreen extends Component{
 
@@ -11,21 +12,25 @@ class SearchScreen extends Component{
         results: []
     }
 
+    static propTypes = {
+        onSetLoading: PropTypes.func.isRequired
+    }
+
     componentDidMount(){
     }
 
     updateQuery = (query) => {
         this.setState({
             query: query.trim()
-        }, () => {            
+        }, () => {
             this.doSearch();
         })
     }
-    
+
     doSearch = () => {
         if (this.state.query){
             this.props.onSetLoading(true, 55);
-            BooksAPI.search(this.state.query).then((res)=>{            
+            BooksAPI.search(this.state.query).then((res)=>{
                 this.setState({
                     results: res.error ? [] : res
                 }, () => {
@@ -54,13 +59,13 @@ class SearchScreen extends Component{
             })
         }).catch(() => {
             this.props.onSetLoading(false);
-        }); 
+        });
     }
 
     render(){
         return (
             <div className="search-books">
-                <div className="search-books-bar">                    
+                <div className="search-books-bar">
                     <Link to="/" className="close-search">Close</Link>
                     <div className="search-books-input-wrapper">
                         {/*
@@ -70,7 +75,7 @@ class SearchScreen extends Component{
 
                         However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                         you don't find a specific author or title. Every search is limited by search terms.
-                        */}                        
+                        */}
                         <DebounceInput
                             minLength={3}
                             debounceTimeout={450}
@@ -85,7 +90,7 @@ class SearchScreen extends Component{
                             <li key={i}>
                                 <Book info={book} changedShelf={this.updateBook} />
                             </li>
-                        ))}                    
+                        ))}
                     </ol>
                 </div>
             </div>
