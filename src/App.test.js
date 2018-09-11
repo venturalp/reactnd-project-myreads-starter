@@ -1,12 +1,10 @@
 import React from 'react'
-import ReactDOM, { render } from 'react-dom'
+import { shallow, mount } from 'enzyme';
 import App from './App'
-import ShelvesScreen from './ShelvesScreen'
-import SearchScreen from './SearchScreen'
 
-describe('Testing App', () => {
-  it('renders without crashing', () => {
-    const div = document.createElement('div')
-    ReactDOM.render(<App />, div)
-  })
+describe('<App />', () => {
+  it('shallow renders correctly', () => {
+    expect(shallow(<App />));
+  });
 })
+
