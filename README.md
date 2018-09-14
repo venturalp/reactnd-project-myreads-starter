@@ -85,6 +85,10 @@ The backend API uses a fixed set of cached search results and is limited to a pa
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). You can find more information on how to perform common tasks [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
+## Extra
+
+As an extra I've added a feature that allows the user to change books from shelves by drag and drop, it only works on desktop platforms, but it's still a plus :)
+
 ## Contributing
 
 This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
