@@ -28,10 +28,13 @@ class ShelfScreen extends Component{
     getAllBooks = () => {
         this.props.onSetLoading(true);
         BooksAPI.getAll().then((books)=>{
+            const filter = books => shelf => books.filter(b => b.shelf === shelf)
+            const filterBy = filter(books);
+
             this.setState({
-                currentReading: books.filter(book=>book.shelf==="currentlyReading"),
-                wantToRead: books.filter(book=> book.shelf === "wantToRead"),
-                read: books.filter(book=> book.shelf === "read")
+                currentReading: filterBy("currentlyReading"),
+                wantToRead: filterBy("wantToRead"),
+                read: filterBy("read")
             }, () => {
                 this.props.onSetLoading(false);
             })
