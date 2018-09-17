@@ -34,7 +34,7 @@ class SearchScreen extends Component{
                 this.setState({
                     results: res.error ? [] : res
                 }, () => {
-                    this.props.onSetLoading(false);
+                    this.compareBooks();
                 })
             }).catch(() => {
                 this.props.onSetLoading(false);
@@ -44,6 +44,30 @@ class SearchScreen extends Component{
                 results: []
             })
     }
+
+    compareBooks = () => {
+        this.props.onSetLoading(true, 55);
+        BooksAPI.getAll().then((books)=>{
+            const filter = books => id => books.filter(b => b.id === id)
+            const filterBy = filter(books);
+
+            this.setState(prev => ({
+                results: prev.results.map(book => {
+                    const bAux = filterBy(book.id);
+
+                    if(bAux.length > 0)
+                        book.shelf = bAux[0].shelf;
+
+                    return book;
+                })
+            }), () => {
+                this.props.onSetLoading(false);
+            })
+        }).catch(()=>{
+            this.props.onSetLoading(false);
+        })
+    }
+
 
     updateBook = (book, shelf) => {
         this.props.onSetLoading(true);
@@ -88,7 +112,7 @@ class SearchScreen extends Component{
                     <ol className="books-grid">
                         {this.state.results && this.state.results.map((book, i)=>(
                             <li key={i}>
-                                <Book info={book} changedShelf={this.updateBook} />
+                                <Book info={book} shelf={book.shelf} changedShelf={this.updateBook} />
                             </li>
                         ))}
                     </ol>

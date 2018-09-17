@@ -6,12 +6,12 @@ class Shelf extends Component{
     static propTypes = {
         title: PropTypes.string.isRequired,
         books: PropTypes.array
-    } 
-    
+    }
+
     onDropBook = (e) => {
         //Retrieve the book's data from the Drag'n'drop method called earlier
         let book = JSON.parse(e.dataTransfer.getData("DraggedBook"));
-        
+
         if (this.props.type === book.shelf) return;
         this.props.onUpdateBook(book, this.props.type);
     }
@@ -30,9 +30,9 @@ class Shelf extends Component{
                     <ol className="books-grid">
                         {books.map((book, i)=>(
                             <li key={i}>
-                                <Book info={book} changedShelf={this.props.onUpdateBook} />
+                                <Book info={book} shelf={book.shelf} changedShelf={this.props.onUpdateBook} />
                             </li>
-                        ))}                    
+                        ))}
                     </ol>
                 </div>
             </div>

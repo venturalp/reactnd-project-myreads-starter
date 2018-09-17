@@ -15,8 +15,8 @@ class Book extends PureComponent{
 
     render(){
 
-        const {title, imageLinks, shelf, authors } = this.props.info;
-        const {changedShelf} = this.props;
+        const {title, imageLinks, authors } = this.props.info;
+        const {changedShelf, shelf} = this.props;
         const strAuthors = authors && authors.join(", ");
 
         return(
