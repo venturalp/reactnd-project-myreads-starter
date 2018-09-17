@@ -43,7 +43,7 @@ update(book, shelf)
 
 ### `search`
 
-Method Signature:
+Assinatura do método:
 
 ```js
 search(query)
