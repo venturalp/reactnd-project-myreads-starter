@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
-class Book extends Component{    
+class Book extends PureComponent{
 
     static propTypes  = {
         info: PropTypes.object.isRequired,
@@ -18,7 +18,7 @@ class Book extends Component{
         const {title, imageLinks, shelf, authors } = this.props.info;
         const {changedShelf} = this.props;
         const strAuthors = authors && authors.join(", ");
-        
+
         return(
             <div className="book" onDragStart={(e)=> this.onStartDrag(e, this.props.info)} draggable="true">
                 <div className="book-top">
